@@ -26,7 +26,6 @@ async function addPlanService(req) {
       const finalResult = await checkAndCreatePlan(fetchResult, plan, planId);
       //resolving result
       resolve(finalResult);
-
     } catch (error) {
       reject(error);
     }
