@@ -39,7 +39,6 @@ router.post("/addPlan", async function (req, res) {
             .send({ message: "Plan created successfully" });
         }
       }).catch(error => {
-        console.log(error);
         res.status(400).send({ message: 'error in add plan api', errorDetails: error });
       })
 

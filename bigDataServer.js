@@ -19,7 +19,9 @@ const appContextPath = '/api'
 //app port
 const appPort = '7000';
 
+
 const addPlanRoute = require('./routes/addPlanRoute');
+const getPlanRoute = require('./routes/getPlanRoute');
 
 
 app.set('view engine', 'html');
@@ -35,6 +37,7 @@ app.use(function (err, req, res, next) {
 
 //routes
 app.use(appContextPath, addPlanRoute);
+app.use(appContextPath, getPlanRoute);
 
 
 //starting server
