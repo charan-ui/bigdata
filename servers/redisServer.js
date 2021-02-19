@@ -19,7 +19,6 @@ var promiseFactory = require("q").promise,
       const client = redis.createClient(REDIS_PORT);
       //on error
       client.on("error",function (err) {
-         console.log(err);
           return err
       })
     return client;

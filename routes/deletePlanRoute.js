@@ -13,7 +13,6 @@ const deletePlanService = require("../service/deletePlanService");
  * @param {call back function} route entry point
  */
 router.delete('/plan/:id', async function (req, res) {
-  console.log(req.params.id);
   //call the service function for deleting a particular plan
   await deletePlanService.deletePlanService(req)
     .then(result => {
