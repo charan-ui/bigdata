@@ -5,7 +5,10 @@
  */
 
 const redisClient = require("../servers/redisServer").redisServerInitialization();
-
+/**
+ * @param {String} planId of a particular plan
+ * @deletes plan associated with that planId
+ */
 async function deletePlandao(planId) {
   return new Promise(async function (resolve, reject) {
     try {
@@ -24,7 +27,10 @@ async function deletePlandao(planId) {
 }
 
 
-
+/**
+ * @param {String} etagId of a particular plan
+ * @deletes etag associated with a particular plan
+ */
 async function deleteEtagDao(etagId) {
   return new Promise(async function (resolve, reject) {
     try {
