@@ -11,7 +11,6 @@ const redisClient = require("../servers/redisServer").redisServerInitialization(
  * @param {String} etagId of a particular plan
  * @returns null if the etag is not present and etag value if it is present
  */
-
 async function fetchParticularEtagId(etagId) {
   return new Promise(async function (resolve, reject) {
     try {

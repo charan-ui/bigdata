@@ -7,7 +7,7 @@
 const deletePlan = require("../dao/deletePlanDao");
 
 /**
-*service function to get a particular plan with respect to passed param id
+*service function to delete a particular plan with respect to passed param id
 *@param {Object} req body
 */
 async function deletePlanService(req) {
