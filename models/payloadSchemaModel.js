@@ -1,4 +1,5 @@
-{
+// JSON schema for the incoming payload
+const payloadSchema = {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
@@ -210,3 +211,5 @@
   ],
   "additionalProperties": true
 }
+
+module.exports = payloadSchema;

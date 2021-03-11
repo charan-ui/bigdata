@@ -22,3 +22,9 @@ node_modules/
 
 # ds_store
 .DS_Store
+
+# Vs code
+.vscode
+
+#test file
+test.js
