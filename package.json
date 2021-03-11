@@ -1,34 +1,21 @@
 {
-  "name": "bigdata",
+  "name": "adv_big_data--assignment_1",
   "version": "1.0.0",
   "description": "",
-  "main": "bigDataServer.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon bigDataServer.js",
-    "dev": "node_modules/.bin/nodemon -e js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/charan-ui/bigdata.git"
-  },
-  "author": "Charan H M",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/charan-ui/bigdata/issues"
-  },
-  "homepage": "https://github.com/charan-ui/bigdata#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "compression": "^1.7.4",
-    "etag": "^1.8.1",
+    "chalk": "^4.1.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
-    "helmet": "^3.21.2",
-    "jsonschema": "^1.2.7",
-    "promise-redis": "0.0.5",
-    "q": "^1.5.1",
-    "redis": "^3.0.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.7"
+    "jsonschema": "^1.4.0",
+    "redis": "^3.0.2",
+    "uuid": "^8.3.2"
   }
 }
