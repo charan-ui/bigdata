@@ -14,7 +14,23 @@ const sendErrorResponse = (res, error) => {
   });
 }
 
+const sendAuthorisationToken = (res, resObj) => {
+  res.status(resObj.httpStatusCode).json({
+    token: resObj.message,
+  })
+}
+
+const middleWareErrors = (res,message)=>{
+  res.status(res.status).json({
+    error:message
+  })
+}
+
+
+
 module.exports = {
   sendSuccessResponse,
   sendErrorResponse,
+  sendAuthorisationToken,
+  middleWareErrors
 };
