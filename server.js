@@ -19,5 +19,6 @@ app.use(express.urlencoded({extended:false}));
 // Mount routes
 app.use('/api/v1/plan', planRouter);
 
+
 const port = 5000;
 app.listen(port, () => logger.info(`Server up and running on port: ${port}`));
