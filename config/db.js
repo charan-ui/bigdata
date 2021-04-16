@@ -10,6 +10,8 @@ const connectRedis = () => {
   client.on('connect', () => logger.info(`Connected to Redis...`));
 }
 
+
+
 module.exports = {
   client,
   connectRedis,

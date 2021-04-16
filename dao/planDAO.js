@@ -1,3 +1,11 @@
+//to adde to my work queue in redis
+const WORK_QUEUE = "WORK_QUEUE";
+const BACKUP_QUEUE = "BACKUP_QUEUE";
+
+// const ioRedis = require('ioredis');
+// const ioRedisClient = ioRedis.createClient(6379);
+
+
 const { client } = require('../config/db');
 const { promisify } = require("util");
 const hgetAsync = promisify(client.hgetall).bind(client);
@@ -9,6 +17,9 @@ const setAsync = promisify(client.set).bind(client);
 const delAsync = promisify(client.del).bind(client);
 const getAsync = promisify(client.get).bind(client);
 const getKeysAsync = promisify(client.keys).bind(client);
+const queueData = promisify(client.lpush).bind(client);
+const popPush = promisify(client.brpoplpush).bind(client);
+const dequeue = promisify(client.lrem).bind(client);
 
 
 
@@ -59,6 +70,21 @@ const getKeys = async(plan)=>{
   return keys;
 }
 
+const addToQueue = async(planId)=>{
+  queueData(WORK_QUEUE,planId);
+  return true;
+}
+
+const redisLoop = async()=>{
+  const planId = popPush(WORK_QUEUE,BACKUP_QUEUE,0);
+  return planId;
+}
+
+const redisLoopRem = async(planId)=>{
+  dequeue(BACKUP_QUEUE,1,planId)
+  return true;
+}
+
 module.exports = {
   getPlan,
   saveToPlanMap,
@@ -68,5 +94,8 @@ module.exports = {
   retriveKeyType,
   getSetMembers,
   getEtag,
-  getKeys
+  getKeys,
+  addToQueue,
+  redisLoop,
+  redisLoopRem
 }
