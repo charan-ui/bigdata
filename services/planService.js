@@ -1,4 +1,5 @@
-const { getPlan, deletePlan, saveEtag, getEtag , getKeys } = require('../dao/planDAO');
+const { getPlan, deletePlan, saveEtag, getEtag , getKeys , addToQueue} = require('../dao/planDAO');
+const {indexerLoop} = require('../dao/planIndexer');
 const { v4: uuidv4 } = require('uuid');
 
 const ErrorResponse = require('../utils//errorResponse');
@@ -21,12 +22,15 @@ const addPlan = async (req) => {
   //set the etag in redis
   //etag_plan_12xvxc345ssdsds-517 key
   await saveEtag(eTag, planId);
+  //add the planId to the queue
+  await addToQueue(planId);
+  //call the indexer process while posting the data
+  await indexerLoop();
   return true;
 }
 
 
 const fetchPlan = async (req) => {
-  // console.log(req.params.id);
   //fetch the plan from db
   const planId = await getPlan(`plan_${req.params.id}`);
   const request_etag = req.headers["if-none-match"];
@@ -77,6 +81,10 @@ const patchPlan = async (req) => {
       const newEtag = uuidv4();
       //save the etag to our db
       const savedEtagResponse = await saveEtag(newEtag, planId);
+       //add the planId to the queue
+       await addToQueue(planId);
+       //call the indexer process while patching the data
+       await indexerLoop();
       return [newEtag, savedEtagResponse];
     }
   } else {//precondition failed etag because some resource has been changed by someone at db please use the latest
@@ -112,6 +120,10 @@ const updatePlan = async (req) => {
       const newEtag = uuidv4();
       //save the etag to our db
       const savedEtagResponse = await saveEtag(newEtag, planId);
+      //add the planId to the queue
+      await addToQueue(planId);
+      //call the indexer process while updating the data
+       await indexerLoop();
       return [newEtag, savedEtagResponse];
     }
   }else{
@@ -123,6 +135,7 @@ const updatePlan = async (req) => {
 
 
 const removePlan = async (req) => {
+  const planID = `plan_${req.params.id}`;
   const plan = await getPlan(`plan_${req.params.id}`);
   if (!plan) {
     throw new ErrorResponse(404, `Plan with objectId ${req.params.id} does not exist!`);
@@ -132,11 +145,14 @@ const removePlan = async (req) => {
   if(keys.length > 0)
   {
     const deleteResult =  await deletePlan(keys);
-    console.log(deleteResult);
+    //add to the queue
+    await addToQueue(planID + "_delete");
+    //index it
+    await indexerLoop();
+    //return the deleted result
     return deleteResult;
   }
 return false;
-
 }
 
 
