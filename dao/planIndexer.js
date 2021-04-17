@@ -138,16 +138,16 @@ async function indexPartialPlan(id, body) {
 }
 
 
-async function deletePlan(id){
+async function deletePlan(id) {
   console.log("Starting to delete plan id ==> " + id);
   elasticClient.delete({
     id: id,
-    type:'_doc',
+    type: '_doc',
     index: INDEX_NAME,
-  }, function(error, response){
-    if(error == undefined){
+  }, function (error, response) {
+    if (error == undefined) {
       console.log("Deleted successfully");
-    }else{
+    } else {
       console.log("Deletion failed", error);
     }
   });
